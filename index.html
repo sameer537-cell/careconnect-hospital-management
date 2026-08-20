@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareConnect | Hospital Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="#home"><span>+</span> CareConnect</a>
+    <button class="menu-button" aria-label="Open menu">☰</button>
+    <nav><a href="#home">Home</a><a href="#services">Services</a><a href="#appointment">Appointment</a><a href="#contact">Contact</a></nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div><p class="eyebrow">YOUR HEALTH, OUR PRIORITY</p><h1>Care that feels<br />close to home.</h1><p class="hero-copy">CareConnect makes it easy to find the right department and book an appointment with trusted healthcare professionals.</p><a class="button" href="#appointment">Book an Appointment <b>→</b></a></div>
+      <div class="hero-card"><div class="pulse">♡</div><p>24/7</p><strong>Always here<br />when you need us.</strong><small>Compassionate care, every day.</small></div>
+    </section>
+
+    <section class="services" id="services"><p class="eyebrow">OUR DEPARTMENTS</p><h2>Healthcare made simple.</h2><div class="service-grid">
+      <article><div class="icon">♥</div><h3>Cardiology</h3><p>Complete heart care with modern diagnostics and expert consultations.</p></article>
+      <article><div class="icon">✚</div><h3>General Medicine</h3><p>Personalised treatment for everyday health and wellness needs.</p></article>
+      <article><div class="icon">☻</div><h3>Paediatrics</h3><p>Gentle, specialised care to keep your children healthy and happy.</p></article>
+    </div></section>
+
+    <section class="booking" id="appointment"><div class="booking-intro"><p class="eyebrow">ONLINE APPOINTMENT</p><h2>Take the first step<br />towards better health.</h2><p>Choose a department and a convenient date. We will confirm your visit shortly.</p></div>
+      <form id="appointment-form"><label>Full name<input name="name" placeholder="Enter your name" required /></label><label>Phone number<input name="phone" type="tel" placeholder="Enter your phone number" required /></label><label>Department<select name="department" required><option value="">Select a department</option><option>Cardiology</option><option>General Medicine</option><option>Paediatrics</option></select></label><label>Preferred date<input name="date" type="date" required /></label><label class="wide">Additional message (optional)<textarea name="message" placeholder="Tell us briefly how we can help"></textarea></label><button class="button" type="submit">Confirm Appointment <b>→</b></button><p class="form-status" role="status"></p></form>
+    </section>
+
+    <section class="appointments"><p class="eyebrow">YOUR REQUESTS</p><h2>Recent appointments</h2><div id="appointment-list"><p class="empty">No appointments yet. Your submitted request will appear here.</p></div></section>
+  </main>
+  <footer id="contact"><div><a class="brand" href="#home"><span>+</span> CareConnect</a><p>Simple healthcare management for a healthier community.</p></div><div><strong>Contact us</strong><p>+91 98765 43210<br />care@careconnect.com<br />Mon–Sat, 9 AM–7 PM</p></div><p class="copyright">© 2026 CareConnect Hospital Management</p></footer>
+  <script src="script.js"></script>
+</body>
+</html>
