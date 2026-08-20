@@ -2,13 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const appointments = [];
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+const publicDirectory = path.join(__dirname, 'public');
+const staticDirectory = fs.existsSync(publicDirectory) ? publicDirectory : __dirname;
+app.use(express.static(staticDirectory));
 
 const appointmentSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
@@ -31,31 +34,21 @@ if (process.env.MONGODB_URI) {
 
 app.get('/api/appointments', async (req, res) => {
   try {
-    const data = databaseConnected
-      ? await Appointment.find().sort({ createdAt: -1 }).lean()
-      : [...appointments].reverse();
+    const data = databaseConnected ? await Appointment.find().sort({ createdAt: -1 }).lean() : [...appointments].reverse();
     res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: 'Could not load appointments.' });
-  }
+  } catch (error) { res.status(500).json({ message: 'Could not load appointments.' }); }
 });
 
 app.post('/api/appointments', async (req, res) => {
   const { name, phone, department, date, message = '' } = req.body;
-  if (![name, phone, department, date].every(value => typeof value === 'string' && value.trim())) {
-    return res.status(400).json({ message: 'Please fill in all required fields.' });
-  }
+  if (![name, phone, department, date].every(value => typeof value === 'string' && value.trim())) return res.status(400).json({ message: 'Please fill in all required fields.' });
   try {
     const entry = { name: name.trim(), phone: phone.trim(), department, date, message: message.trim() };
-    const appointment = databaseConnected
-      ? await Appointment.create(entry)
-      : { ...entry, _id: Date.now().toString(), createdAt: new Date() };
+    const appointment = databaseConnected ? await Appointment.create(entry) : { ...entry, _id: Date.now().toString(), createdAt: new Date() };
     if (!databaseConnected) appointments.push(appointment);
     res.status(201).json({ message: 'Appointment booked successfully!', appointment });
-  } catch (error) {
-    res.status(500).json({ message: 'Could not book the appointment.' });
-  }
+  } catch (error) { res.status(500).json({ message: 'Could not book the appointment.' }); }
 });
 
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+app.get('*', (req, res) => res.sendFile(path.join(staticDirectory, 'index.html')));
 app.listen(PORT, () => console.log(`CareConnect running at http://localhost:${PORT}`));
